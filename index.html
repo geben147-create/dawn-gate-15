@@ -74,7 +74,7 @@
 }
 section[data-kind="human"]{
   background:#000000;
-  border:1px solid #302A20;
+  border:2px solid #6E5423;
   border-radius:3px;
   margin-top:clamp(44px,7vw,82px);
   padding:clamp(26px,3.4vw,42px) clamp(18px,2.6vw,34px) clamp(30px,4vw,48px);
@@ -435,6 +435,38 @@ a.jump:hover{border-bottom-color:var(--accent)}
   .step-head{grid-template-columns:1fr; gap:12px}
   .bignum{font-size:34px}
 }
+
+/* ===== 핵심 단언 강조 (이모지는 CSS이므로 본문 글자에는 들어가지 않음) ===== */
+.hl{
+  font-weight:700;
+  font-size:1.08em;
+  padding:.1em .4em .14em;
+  border-radius:2px;
+  letter-spacing:-.005em;
+}
+.hl::before{
+  font-weight:400; font-size:.92em; margin-right:.36em;
+  -webkit-text-stroke:0; vertical-align:.02em;
+}
+.hl.no  { color:#FFA48C; background:rgba(255,120,90,.13); box-shadow:inset 0 0 0 1px rgba(255,120,90,.26) }
+.hl.ok  { color:#6FD9AC; background:rgba(70,210,150,.13); box-shadow:inset 0 0 0 1px rgba(70,210,150,.26) }
+.hl.chk { color:#7FCDE2; background:rgba(90,190,225,.13); box-shadow:inset 0 0 0 1px rgba(90,190,225,.26) }
+.hl.must{ color:#FFC86A; background:rgba(255,190,80,.14); box-shadow:inset 0 0 0 1px rgba(255,190,80,.30) }
+.hl.no::before  { content:"\26D4" }
+.hl.ok::before  { content:"\2705" }
+.hl.chk::before { content:"\1F50D" }
+.hl.must::before{ content:"\2757" }
+td .hl{ font-size:1.02em }
+
+/* ===== 🟨 사람 단계 구분선 ===== */
+.hr-human{
+  margin:clamp(34px,5vw,60px) 0 0;
+  font-size:clamp(12px,1.5vw,16px);
+  line-height:1; letter-spacing:.34em; text-align:center;
+  white-space:nowrap; overflow:hidden; user-select:none;
+}
+.hr-human + section{ margin-top:12px !important; padding-top:0 }
+.hr-human + section.block:not([data-kind="human"]){ padding-top:clamp(26px,3.4vw,42px) }
 </style>
 <style>img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
@@ -488,8 +520,8 @@ a.jump:hover{border-bottom-color:var(--accent)}
     <div class="stanza">
       <p class="lede">추천 순서: 참고곡 2개 → 자동 분석 보고서 → 내가 만든 핵심 선율·리듬 → 전사와 구체적인 편곡 결정 → 자동 악기화·믹스 → 마지막 녹음·청취 → 서류와 신청.</p>
       <p>악보 프로그램을 직접 배울 필요는 없습니다. 파일과 말로 작업할 수 있습니다. 다만 ‘사람이 만든 음악’이 목표이므로 실제 음악 표현을 만드는 일과 본인 확인·서명은 대신할 수 없습니다. 핵심 허밍은 최종 편곡보다 앞에 두고, 합창 녹음·최종 청취·신청은 뒤로 모았습니다.</p>
-      <p>이 문서는 실행 순서와 프롬프트입니다. 새 최종곡이나 기관 승인이 이미 완료되었다는 뜻은 아닙니다. 현재는 도구 로딩 확인, 기존 자료 점검, 이 안내서 작성까지 완료했습니다. 두 번째 참고곡과 본인 녹음은 아직 받지 않았습니다.</p>
-      <p>표시: 🤖 자동 처리 · 👤 본인이 해야 하는 일 또는 실제 참여 기록 · ⏳ 앞으로 필요. 👤 표시는 사람의 참여를 뜻하며, 모든 항목이 법적 작곡권으로 인정되었다는 뜻은 아닙니다.</p>
+      <p>이 문서는 실행 순서와 프롬프트입니다. <b class="hl no">새 최종곡이나 기관 승인이 이미 완료되었다는 뜻은 아닙니다.</b> 현재는 도구 로딩 확인, 기존 자료 점검, 이 안내서 작성까지 완료했습니다. 두 번째 참고곡과 본인 녹음은 아직 받지 않았습니다.</p>
+      <p>표시: 🤖 자동 처리 · 👤 본인이 해야 하는 일 또는 실제 참여 기록 · ⏳ 앞으로 필요. 👤 표시는 사람의 참여를 뜻하며, <b class="hl no">모든 항목이 법적 작곡권으로 인정되었다는 뜻은 아닙니다.</b></p>
     </div>
   </header>
 
@@ -501,12 +533,12 @@ a.jump:hover{border-bottom-color:var(--accent)}
           <thead><tr><th>첨부 자료에서 보완할 부분</th><th>이번 순서에 적용한 내용</th></tr></thead>
           <tbody>
             <tr><td class="k">완성된 AI 곡에 사람 목소리를 마지막에 넣기</td><td>기존 AI 이력은 보존하고, 새로운 핵심 음악은 인간 입력에서 시작합니다.</td></tr>
-            <tr><td class="k">A/B 선택 또는 음 하나 수정하면 인간 작곡</td><td>선택·수정의 구체적인 창작성과 결과를 기록합니다. 자동 합격 기준으로 쓰지 않습니다.</td></tr>
+            <tr><td class="k">A/B 선택 또는 음 하나 수정하면 인간 작곡</td><td>선택·수정의 구체적인 창작성과 결과를 기록합니다. <b class="hl no">자동 합격 기준으로 쓰지 않습니다.</b></td></tr>
             <tr><td class="k">원곡의 숫자만 쓰면 안전</td><td>음표·타격 시각·강약을 숫자로 바꿔도 구체적인 표현을 복제할 수 있습니다. 전체 사건표를 그대로 옮기지 않습니다.</td></tr>
             <tr><td class="k">한 번 승인한 AI 타임라인은 사람 편곡</td><td>AI가 제안한 부분의 출처는 남깁니다. 실제로 본인이 만든 표현과 편집만 별도로 설명합니다.</td></tr>
             <tr><td class="k">합성 악기나 무료 도구면 Content ID 가능</td><td>도구 사용권, 음원 권리, 배타성, 유통사 요건을 따로 확인합니다.</td></tr>
             <tr><td class="k">−14 LUFS·−1 dBTP면 합격</td><td>작업용 목표와 기술 검사의 예일 뿐입니다. 최종 출력 규격과 심사는 경로마다 확인합니다.</td></tr>
-            <tr><td class="k">사람 기여 20%, 자동화 40%, 승인 기여 25%</td><td>공식 인정률이나 승인 확률이 아니므로 적용하지 않습니다.</td></tr>
+            <tr><td class="k">사람 기여 20%, 자동화 40%, 승인 기여 25%</td><td><b class="hl no">공식 인정률이나 승인 확률이 아니므로 적용하지 않습니다.</b></td></tr>
             <tr><td class="k">다른 문서에서 5곡을 처리했으니 이 PC에서도 완료</td><td>첨부 문서는 참고 자료입니다. 이 프로젝트의 실제 파일·실행 기록만 완료로 표시합니다.</td></tr>
           </tbody>
         </table>
@@ -525,8 +557,8 @@ a.jump:hover{border-bottom-color:var(--accent)}
       </div>
     </div>
     <div class="body">
-      <p><span class="lead a">🤖 제가 할 일:</span> 기존 「새벽의 문」 A/B, 원곡 참고·AI 작곡 이력, MIDI, 샘플 사용 기록을 보존합니다. 새 인간 입력을 받을 작업 계획은 별도로 만듭니다. 파일명을 바꿔서 기존 AI 음표를 인간 음표로 옮겨 적지 않습니다.</p>
-      <p><span class="lead h">👤 이번 세션에서 이미 하신 일:</span> 「새벽의 문」을 선호하고 「별의 항로」를 거절한 선택, 기존 버전을 따로 저장하라는 요청. 이는 선택·방향 제시 기록입니다. 기존 시안 전체의 직접 작곡 증거는 아직 아닙니다.</p>
+      <p><span class="lead a">🤖 제가 할 일:</span> 기존 「새벽의 문」 A/B, 원곡 참고·AI 작곡 이력, MIDI, 샘플 사용 기록을 보존합니다. 새 인간 입력을 받을 작업 계획은 별도로 만듭니다. <b class="hl no">파일명을 바꿔서 기존 AI 음표를 인간 음표로 옮겨 적지 않습니다.</b></p>
+      <p><span class="lead h">👤 이번 세션에서 이미 하신 일:</span> 「새벽의 문」을 선호하고 「별의 항로」를 거절한 선택, 기존 버전을 따로 저장하라는 요청. 이는 선택·방향 제시 기록입니다. <b class="hl no">기존 시안 전체의 직접 작곡 증거는 아직 아닙니다.</b></p>
       <p class="note"><span class="lead n">순서 이유:</span> 처음부터 자료를 구분해야 나중에 어떤 선율이 누구에게서 나왔는지 확인할 수 있습니다.</p>
       <div class="plabel">보낼 프롬프트</div>
       <div class="prompt">
@@ -552,15 +584,15 @@ a.jump:hover{border-bottom-color:var(--accent)}
           <thead><tr><th>목표</th><th>무엇을 판단하는가</th><th>현재 상태</th></tr></thead>
           <tbody>
             <tr><td class="k">한국저작권위원회 등록</td><td>인간의 창작적 표현과 신청 범위</td><td>새 인간 입력 후 검토</td></tr>
-            <tr><td class="k">KOMCA 신고·신탁</td><td>협회의 현행 접수·관리 조건</td><td>이 제작 방식의 적용 기준 서면 확인 필요</td></tr>
+            <tr><td class="k">KOMCA 신고·신탁</td><td>협회의 현행 접수·관리 조건</td><td><b class="hl chk">이 제작 방식의 적용 기준 서면 확인 필요</b></td></tr>
             <tr><td class="k">Amazon·Spotify·YouTube Music 유통</td><td>음원 권리, 공시, 규격과 서비스 정책</td><td>유통사 검토 전</td></tr>
-            <tr><td class="k">YouTube 채널 수익화 YPP</td><td>채널 자격과 콘텐츠 정책</td><td>채널 정보 미확인</td></tr>
-            <tr><td class="k">YouTube Content ID</td><td>참조 음원의 배타적 권리와 적격성</td><td>현재 샘플 시안으로 신청하지 않음</td></tr>
+            <tr><td class="k">YouTube 채널 수익화 YPP</td><td>채널 자격과 콘텐츠 정책</td><td><b class="hl chk">채널 정보 미확인</b></td></tr>
+            <tr><td class="k">YouTube Content ID</td><td>참조 음원의 배타적 권리와 적격성</td><td><b class="hl no">현재 샘플 시안으로 신청하지 않음</b></td></tr>
           </tbody>
         </table>
       </div>
       <p style="max-width:74ch"><span class="lead h">👤 필수:</span> 계정·신분 확인과 계약은 마지막 15단계에 합니다. 문의를 발송할 때에도 발송할 내용과 수신 기관을 확인한 뒤 진행합니다. 지금은 문의 초안까지만 만듭니다.</p>
-      <p class="note" style="max-width:74ch">KOMCA의 2026년 8월 25일 규정 철회 보도가 있으며 공식 규정 목록도 같은 날짜를 표시합니다. Basic Pitch 전사와 Codex 실행을 협회가 어떻게 분류하는지 회신받기 전, ‘AI 사용 없음’에 해당한다고 단정하지 않습니다. [K2·K3]</p>
+      <p class="note" style="max-width:74ch">KOMCA의 2026년 8월 25일 규정 철회 보도가 있으며 공식 규정 목록도 같은 날짜를 표시합니다. Basic Pitch 전사와 Codex 실행을 협회가 어떻게 분류하는지 회신받기 전, <b class="hl no">‘AI 사용 없음’에 해당한다고 단정하지 않습니다.</b> [K2·K3]</p>
       <div class="plabel">보낼 프롬프트</div>
       <div class="prompt">
         <div class="prompt-bar"><span>복사해서 보내는 프롬프트</span><button class="copy" type="button" data-noexport>복사<span class="ck">✓</span></button></div>
@@ -580,9 +612,9 @@ a.jump:hover{border-bottom-color:var(--accent)}
     </div>
     <div class="body">
       <p><span class="lead h">👤 필요한 입력:</span> 합법적으로 이용할 수 있는 참고곡 두 개를 전달합니다. 현재 확인된 첫 곡은 The Awakening — Patrick Patrikios입니다. 두 번째 곡은 아직 지정되지 않았습니다. 곡마다 좋아하는 점을 한 문장으로 말하면 좋지만 필수는 아닙니다.</p>
-      <p><span class="lead a">🤖 제가 할 일:</span> 파일 식별, BPM·박자·조성·화음 후보, 구간 길이, 음역, 악기군, 타악 밀도, 에너지와 전환을 비교합니다. Demucs 분리는 필요할 때만 사용합니다. ‘현악/브라스/패드’ 등 악기 추정에는 확신 정도와 겹침 가능성을 표시합니다. 분리 stem을 실제 원본 멀티트랙이나 정확한 악기로 단정하지 않습니다.</p>
+      <p><span class="lead a">🤖 제가 할 일:</span> 파일 식별, BPM·박자·조성·화음 후보, 구간 길이, 음역, 악기군, 타악 밀도, 에너지와 전환을 비교합니다. Demucs 분리는 필요할 때만 사용합니다. ‘현악/브라스/패드’ 등 악기 추정에는 확신 정도와 겹침 가능성을 표시합니다. <b class="hl no">분리 stem을 실제 원본 멀티트랙이나 정확한 악기로 단정하지 않습니다.</b></p>
       <p>멜로디는 음역·긴장과 해소·프레이즈·리듬의 특징을 설명합니다. 제작 파일에는 원곡 파형·stem·음표 전사·타격 시각표를 복사하지 않습니다. 분석과 유사성 점검용 자료는 따로 보존합니다.</p>
-      <p class="note"><span class="lead h">👤 이번 세션의 기록:</span> 원곡과 박자·코드·멜로디·북 리듬을 맞춰 달라는 요청이 있었습니다. 그 요청은 참고 관계의 기록이며 새 독자 작곡의 증거로 바꾸지 않습니다.</p>
+      <p class="note"><span class="lead h">👤 이번 세션의 기록:</span> 원곡과 박자·코드·멜로디·북 리듬을 맞춰 달라는 요청이 있었습니다. 그 요청은 참고 관계의 기록이며 <b class="hl no">새 독자 작곡의 증거로 바꾸지 않습니다.</b></p>
       <div class="plabel">보낼 프롬프트</div>
       <div class="prompt">
         <div class="prompt-bar"><span>복사해서 보내는 프롬프트</span><button class="copy" type="button" data-noexport>복사<span class="ck">✓</span></button></div>
@@ -601,7 +633,7 @@ a.jump:hover{border-bottom-color:var(--accent)}
       </div>
     </div>
     <div class="body">
-      <p><span class="lead a">🤖 제가 할 일:</span> 보고서는 ‘참고곡 A / 참고곡 B / 새 곡에서 직접 정할 항목’의 세 열로 만듭니다. 길이와 템포 범위, 안정된 도입, 상승 구간, 절정에서 늘어나는 악기군을 설명합니다. 음역·리듬·호흡 길이를 안내하고, 필요하면 메트로놈과 단순한 코드 학습 예시를 제공합니다. 새로운 완성 멜로디를 먼저 만들어 따라 부르게 하지 않습니다.</p>
+      <p><span class="lead a">🤖 제가 할 일:</span> 보고서는 ‘참고곡 A / 참고곡 B / 새 곡에서 직접 정할 항목’의 세 열로 만듭니다. 길이와 템포 범위, 안정된 도입, 상승 구간, 절정에서 늘어나는 악기군을 설명합니다. 음역·리듬·호흡 길이를 안내하고, 필요하면 메트로놈과 단순한 코드 학습 예시를 제공합니다. <b class="hl no">새로운 완성 멜로디를 먼저 만들어 따라 부르게 하지 않습니다.</b></p>
       <p><span class="lead h">👤 이번 세션에서 확인된 방향:</span> 촌스러운 ‘쿵짝’ 베이스 제외, 현악기 선호, 편한 도입, 중간의 상승 전환, 여러 겹의 웅장함, 관악기 추가. 「새벽의 문」에는 튀는 구간이 없었다는 정정도 유지합니다. 임의로 오류 구간을 만들지 않습니다.</p>
       <p><span class="lead h">👤 직접 할 일:</span> 아래 빈칸은 실제 생각대로 말합니다. 이전에 답한 내용은 다시 묻지 않습니다.</p>
       <div class="prompt">
@@ -611,7 +643,7 @@ a.jump:hover{border-bottom-color:var(--accent)}
 내가 허밍할 수 있게 박자와 편한 음역만 안내해 줘.
 선율 자체를 대신 작곡하지 말고, 모르는 화성학 용어는 짧은 청취 예시로 설명해 줘.</pre>
       </div>
-      <p class="note">자동 제안의 A/B 선택은 참여 기록으로 남깁니다. 선택한 후보의 원래 작곡 출처까지 사람으로 바꾸지는 않습니다. [K1·D1]</p>
+      <p class="note">자동 제안의 A/B 선택은 참여 기록으로 남깁니다. <b class="hl no">선택한 후보의 원래 작곡 출처까지 사람으로 바꾸지는 않습니다.</b> [K1·D1]</p>
     </div>
   </section>
 
@@ -630,15 +662,15 @@ a.jump:hover{border-bottom-color:var(--accent)}
         <table>
           <thead><tr><th>도구</th><th>역할</th><th>이번에 실제 확인한 범위</th></tr></thead>
           <tbody>
-            <tr><td class="k">Basic Pitch</td><td>본인 허밍 → MIDI 전사</td><td>전용 환경에서 모델 로딩 성공</td></tr>
-            <tr><td class="k">Demucs</td><td>필요할 때 참고곡 분리</td><td>환경 import 성공, 이번 두 곡 분리는 아직</td></tr>
+            <tr><td class="k">Basic Pitch</td><td>본인 허밍 → MIDI 전사</td><td>전용 환경에서 <b class="hl ok">모델 로딩 성공</b></td></tr>
+            <tr><td class="k">Demucs</td><td>필요할 때 참고곡 분리</td><td>환경 import 성공, <b class="hl chk">이번 두 곡 분리는 아직</b></td></tr>
             <tr><td class="k">Python 오디오 도구·Pedalboard</td><td>MIDI 처리·악기 호스팅·효과</td><td>기존 패키지와 버전 확인</td></tr>
-            <tr><td class="k">Surge XT</td><td>새 합성 악기</td><td>VST3 악기로 로딩 성공</td></tr>
-            <tr><td class="k">FFmpeg</td><td>포맷 변환·음량 측정</td><td>실행 성공</td></tr>
+            <tr><td class="k">Surge XT</td><td>새 합성 악기</td><td><b class="hl ok">VST3 악기로 로딩 성공</b></td></tr>
+            <tr><td class="k">FFmpeg</td><td>포맷 변환·음량 측정</td><td><b class="hl ok">실행 성공</b></td></tr>
           </tbody>
         </table>
       </div>
-      <p style="max-width:74ch">단순 파형만 많이 쌓는 대신 Surge의 합성·스트링 알고리즘과 배음·필터·연주 강약을 조합합니다. 그래도 실제 바이올린·관악기와 같은 음질을 보장하지는 않습니다. 실제 악기 질감이 부족한 핵심 한 파트는 11단계에서 실연 녹음으로 개선할 수 있습니다. 외부 연주자를 쓰는 경우 비용과 권리 합의가 별도로 필요합니다. 무료 샘플 라이브러리를 추가해 현재 DistroKid Content ID 조건을 충족했다고 처리하지 않습니다. [T1·T2·T3·D2]</p>
+      <p style="max-width:74ch">단순 파형만 많이 쌓는 대신 Surge의 합성·스트링 알고리즘과 배음·필터·연주 강약을 조합합니다. <b class="hl no">그래도 실제 바이올린·관악기와 같은 음질을 보장하지는 않습니다.</b> 실제 악기 질감이 부족한 핵심 한 파트는 11단계에서 실연 녹음으로 개선할 수 있습니다. 외부 연주자를 쓰는 경우 비용과 권리 합의가 별도로 필요합니다. <b class="hl no">무료 샘플 라이브러리를 추가해 현재 DistroKid Content ID 조건을 충족했다고 처리하지 않습니다.</b> [T1·T2·T3·D2]</p>
       <p style="max-width:74ch"><span class="lead h">👤 필요한 일:</span> 지금은 없음. 유료 도구나 연주자 구매도 하지 않았습니다.</p>
       <div class="plabel">보낼 프롬프트</div>
       <div class="prompt" style="max-width:74ch">
@@ -649,6 +681,7 @@ a.jump:hover{border-bottom-color:var(--accent)}
   </section>
 
   <!-- 06 -->
+  <div class="hr-human" aria-hidden="true" data-noexport>🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨</div>
   <section class="block step" id="s06" data-h="140" data-kind="human">
     <div class="step-head">
       <div class="bignum">06</div>
@@ -658,7 +691,7 @@ a.jump:hover{border-bottom-color:var(--accent)}
       </div>
     </div>
     <div class="body">
-      <p>여기가 뒤로 미룰 수 없는 첫 음악 창작 단계입니다. 보고서와 박자 안내를 참고해 본인이 새로운 선율을 만듭니다. 원곡이나 AI가 만든 선율을 그대로 따라 부른 것은 별도로 밝힙니다.</p>
+      <p><b class="hl must">여기가 뒤로 미룰 수 없는 첫 음악 창작 단계입니다.</b> 보고서와 박자 안내를 참고해 본인이 새로운 선율을 만듭니다. 원곡이나 AI가 만든 선율을 그대로 따라 부른 것은 별도로 밝힙니다.</p>
       <p>필요한 음악 재료는 한 녹음 파일에 순서대로 담아도 됩니다.</p>
       <ol class="steps-in">
         <li>도입·주제의 허밍과 끝맺음. 작업 예로 20~30초 정도부터 시작합니다.</li>
@@ -667,7 +700,7 @@ a.jump:hover{border-bottom-color:var(--accent)}
       </ol>
       <p>이 길이는 녹음 편의를 위한 예이며 법적 최소 시간이나 인정 비율이 아닙니다. 브리지·응답 선율 등 추가 음악이 필요하면 다음 결정 단계에서 더 만듭니다. 악기 연주 실력은 필수가 아닙니다.</p>
       <p><span class="lead n">녹음 방법:</span> 조용한 곳, 반주가 필요하면 이어폰, 음성 효과는 끄기, 편집 전 원본 유지. WAV가 가능하면 좋지만 휴대폰 M4A도 전달할 수 있습니다. 파일 변환은 제가 합니다. 새로 만든 부분과 따라 부른 부분을 말로 구분해 주세요.</p>
-      <p class="note"><span class="lead h">👤 현재 상태:</span> 녹음하겠다는 답변만 있으며 실제 파일은 아직 없습니다.</p>
+      <p class="note"><span class="lead h">👤 현재 상태:</span> 녹음하겠다는 답변만 있으며 <b class="hl chk">실제 파일은 아직 없습니다.</b></p>
       <div class="plabel">보낼 프롬프트</div>
       <div class="prompt">
         <div class="prompt-bar"><span>복사해서 보내는 프롬프트</span><button class="copy" type="button" data-noexport>복사<span class="ck">✓</span></button></div>
@@ -677,6 +710,7 @@ a.jump:hover{border-bottom-color:var(--accent)}
   </section>
 
   <!-- 07 -->
+  <div class="hr-human" aria-hidden="true" data-noexport>🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨</div>
   <section class="block step" id="s07" data-h="106" data-kind="auto">
     <div class="step-head">
       <div class="bignum">07</div>
@@ -687,7 +721,7 @@ a.jump:hover{border-bottom-color:var(--accent)}
     </div>
     <div class="body">
       <p><span class="lead a">🤖 제가 할 일:</span> 본인 녹음에 Basic Pitch를 실행해 원시 MIDI·음표 목록·음정 곡선을 보관합니다. 손뼉·북처럼 음높이가 불명확한 소리는 타격 시점과 강세를 따로 추정합니다. 원본, 원시 전사, 편집안을 구분해 재생합니다. [T1]</p>
-      <p>자동 전사의 오류 수정과 새로운 음악 선택을 구별합니다. 조성 밖 음을 전부 자동으로 지우거나 ‘예쁜 선율’로 바꾸지 않습니다. 애매한 음은 짧은 비교 클립으로 한꺼번에 모아 8단계에서 확인합니다.</p>
+      <p>자동 전사의 오류 수정과 새로운 음악 선택을 구별합니다. <b class="hl no">조성 밖 음을 전부 자동으로 지우거나 ‘예쁜 선율’로 바꾸지 않습니다.</b> 애매한 음은 짧은 비교 클립으로 한꺼번에 모아 8단계에서 확인합니다.</p>
       <p class="note"><span class="lead h">👤 필수:</span> Basic Pitch를 직접 실행하거나 MIDI 파일을 편집할 필요는 없습니다.</p>
       <div class="plabel">보낼 프롬프트</div>
       <div class="prompt">
@@ -698,6 +732,7 @@ a.jump:hover{border-bottom-color:var(--accent)}
   </section>
 
   <!-- 08 -->
+  <div class="hr-human" aria-hidden="true" data-noexport>🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨</div>
   <section class="block step" id="s08" data-h="118" data-kind="human">
     <div class="step-head">
       <div class="bignum">08</div>
@@ -708,8 +743,8 @@ a.jump:hover{border-bottom-color:var(--accent)}
     </div>
     <div class="body">
       <p><span class="lead h">👤 직접 할 일:</span> 불명확한 음은 다시 불러 주거나 어느 소리인지 지정합니다. 주제의 반복·변형, 저음 또는 코드의 순서, 북의 패턴, 악기 진입, 쉼과 절정의 위치를 정합니다. 음악 용어를 몰라도 ‘여기 녹음의 마지막 음을 이 길이로’, ‘이 낮은 음으로 바꾸고 두 마디 유지’처럼 결정할 수 있습니다.</p>
-      <p><span class="lead a">🤖 제가 할 일:</span> 계이름·MIDI·마디·초로 번역하고, 확인할 음악적 결정을 한 묶음으로 제시합니다. 일반적인 화음의 설명과 청취 예시는 제공할 수 있습니다. 제가 새로 작곡한 진행이나 응답 선율이 남으면 그 출처를 기록합니다. 사람이 후보 하나를 승인했다는 이유만으로 그 음표들을 전부 인간 작곡으로 표시하지 않습니다.</p>
-      <p><span class="lead n">전체 작곡·편곡을 본인의 창작이라고 설명하려면:</span> 주제 한 조각 외에도 실제 사용되는 창작적 음악 요소의 출처가 확인되어야 합니다. 빈 구간을 AI가 자동 작곡하게 했다면 ‘사람 선율 + AI 편곡’이 남을 수 있습니다. 현재 목표에서는 미정 부분을 모아 본인이 정하도록 하고, 필요 없는 독립 선율은 더 만들지 않습니다. [K1·D1]</p>
+      <p><span class="lead a">🤖 제가 할 일:</span> 계이름·MIDI·마디·초로 번역하고, 확인할 음악적 결정을 한 묶음으로 제시합니다. 일반적인 화음의 설명과 청취 예시는 제공할 수 있습니다. 제가 새로 작곡한 진행이나 응답 선율이 남으면 그 출처를 기록합니다. <b class="hl no">사람이 후보 하나를 승인했다는 이유만으로 그 음표들을 전부 인간 작곡으로 표시하지 않습니다.</b></p>
+      <p><span class="lead n">전체 작곡·편곡을 본인의 창작이라고 설명하려면:</span> 주제 한 조각 외에도 실제 사용되는 창작적 음악 요소의 출처가 확인되어야 합니다. 빈 구간을 AI가 자동 작곡하게 했다면 <b class="hl chk">‘사람 선율 + AI 편곡’이 남을 수 있습니다.</b> 현재 목표에서는 미정 부분을 모아 본인이 정하도록 하고, 필요 없는 독립 선율은 더 만들지 않습니다. [K1·D1]</p>
       <p class="note"><span class="lead h">👤 이번 세션에서 가져올 기록:</span> 안정된 도입, 상승·클라이맥스, 북·관악기 추가 요구. 이는 출발점입니다. 구체적인 음과 리듬·반영 시점은 실제 입력에 맞춰 확정합니다.</p>
       <div class="plabel">보낼 프롬프트</div>
       <div class="prompt">
@@ -720,6 +755,7 @@ a.jump:hover{border-bottom-color:var(--accent)}
   </section>
 
   <!-- 09 -->
+  <div class="hr-human" aria-hidden="true" data-noexport>🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨</div>
   <section class="block step" id="s09" data-h="92" data-kind="auto">
     <div class="step-head">
       <div class="bignum">09</div>
@@ -730,7 +766,7 @@ a.jump:hover{border-bottom-color:var(--accent)}
     </div>
     <div class="body">
       <p><span class="lead a">🤖 제가 할 일:</span> 8단계의 구체적인 선율과 규칙을 악보·MIDI·트랙으로 옮깁니다. 확정한 옥타브 겹치기·반복·음 길이·진입을 실행하고, 각 음표에 원본 녹음 또는 결정의 연결 기록을 남깁니다. 코드가 파일을 썼다는 사실만으로 AI 작곡 또는 인간 작곡이라고 단정하지 않고 실제 음악 결정의 출처를 확인합니다.</p>
-      <p>이번 발매 목표에서는 직접 녹음한 소리와 출처가 확인되는 합성 악기를 사용합니다. 기존 VSCO 샘플 렌더와 원곡에서 추정한 북 사건표는 새 발매곡으로 자동 이월하지 않습니다. 기본 출력은 단순형과 풍부한형의 같은 곡 비교본입니다. 새 선율을 세 곡 만들고 고르게 하는 작업은 포함하지 않습니다.</p>
+      <p>이번 발매 목표에서는 직접 녹음한 소리와 출처가 확인되는 합성 악기를 사용합니다. 기존 VSCO 샘플 렌더와 원곡에서 추정한 북 사건표는 <b class="hl no">새 발매곡으로 자동 이월하지 않습니다.</b> 기본 출력은 단순형과 풍부한형의 같은 곡 비교본입니다. 새 선율을 세 곡 만들고 고르게 하는 작업은 포함하지 않습니다.</p>
       <p class="note"><span class="lead h">👤 필요한 일:</span> 확정된 내용의 실행 중에는 없음. 새로운 음악적 선택이 필요한 경우에만 다음 청취 묶음으로 모읍니다.</p>
       <div class="plabel">보낼 프롬프트</div>
       <div class="prompt">
@@ -750,7 +786,7 @@ a.jump:hover{border-bottom-color:var(--accent)}
       </div>
     </div>
     <div class="body" style="max-width:none">
-      <p style="max-width:74ch"><span class="lead a">🤖 실행 담당은 저입니다.</span> <span class="lead h">👤 음악적으로 달라지는 항목은</span> 8단계에서 본인이 정한 범위로 적용합니다. 아래는 승인 기준이 아니라 이 곡을 위한 제작 제안입니다.</p>
+      <p style="max-width:74ch"><span class="lead a">🤖 실행 담당은 저입니다.</span> <span class="lead h">👤 음악적으로 달라지는 항목은</span> 8단계에서 본인이 정한 범위로 적용합니다. <b class="hl no">아래는 승인 기준이 아니라 이 곡을 위한 제작 제안입니다.</b></p>
       <div class="tablewrap">
         <table>
           <thead><tr><th>순서</th><th>풍성하게 만드는 방법</th><th>사람의 결정과 자동 처리</th></tr></thead>
@@ -762,7 +798,7 @@ a.jump:hover{border-bottom-color:var(--accent)}
             <tr><td class="n">5</td><td class="k">본인 북 리듬에 저역 몸통·중역 타격·잔향 층 추가</td><td>👤 리듬 원본 → 🤖 음색 합성·위상 점검</td></tr>
             <tr><td class="n">6</td><td class="k">‘쿵짝’ 대신 필요한 저음을 길게 지지</td><td>👤 저음·지속 길이 결정 → 🤖 합성·마스킹 정리</td></tr>
             <tr><td class="n">7</td><td class="k">상승음·심벌·짧은 쉼 뒤 절정</td><td>👤 전환 시점·쉼 길이·효과 방향 결정 → 🤖 자체 합성</td></tr>
-            <tr><td class="n">8</td><td class="k">숨·활 느낌과 미세한 강약 차이</td><td>🤖 지정 범위의 소리 표현. 이를 인간 실연이라고 쓰지 않음</td></tr>
+            <tr><td class="n">8</td><td class="k">숨·활 느낌과 미세한 강약 차이</td><td>🤖 지정 범위의 소리 표현. <b class="hl no">이를 인간 실연이라고 쓰지 않음</b></td></tr>
             <tr><td class="n">9</td><td class="k">직접 녹음한 여러 합창 테이크</td><td>👤 실제로 여러 번 부름 → 🤖 컴핑·공간 배치</td></tr>
             <tr><td class="n">10</td><td class="k">앞뒤 거리·스테레오·저역 정리</td><td>🤖 리버브·EQ·모노 호환 점검, 선율이 묻히지 않게 조절</td></tr>
           </tbody>
@@ -778,6 +814,7 @@ a.jump:hover{border-bottom-color:var(--accent)}
   </section>
 
   <!-- 11 -->
+  <div class="hr-human" aria-hidden="true" data-noexport>🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨</div>
   <section class="block step" id="s11" data-h="72" data-kind="human">
     <div class="step-head">
       <div class="bignum">11</div>
@@ -787,9 +824,9 @@ a.jump:hover{border-bottom-color:var(--accent)}
       </div>
     </div>
     <div class="body">
-      <p>선택 단계입니다. 허밍은 MIDI용으로만 쓰고 순수 기악곡으로 완성할 수도 있습니다. 저작권 등록을 위해 가창을 억지로 넣을 필요는 없습니다.</p>
-      <p>합창을 넣는다면 확정된 음과 리듬으로 ‘아/오’를 서로 다른 실제 테이크로 녹음합니다. 같은 녹음의 피치 복제는 가공된 한 실연으로 기록하며 여러 명이 불렀다고 쓰지 않습니다. 화음 음을 AI가 새로 정하게 했다면 그 편곡 출처도 남습니다.</p>
-      <p><span class="lead n">실제 바이올린 음색이 꼭 필요한 경우:</span> 본인 또는 연주자가 핵심 한 파트를 녹음하는 방식으로 개선할 수 있습니다. 전문 연주자가 새 음악까지 만드는 경우에는 그 사람의 작곡·편곡 기여를 확인합니다. 의뢰 비용을 냈다고 모든 저작권이 자동 이전되는 것은 아닙니다.</p>
+      <p><b class="hl must">선택 단계입니다.</b> 허밍은 MIDI용으로만 쓰고 순수 기악곡으로 완성할 수도 있습니다. 저작권 등록을 위해 가창을 억지로 넣을 필요는 없습니다.</p>
+      <p>합창을 넣는다면 확정된 음과 리듬으로 ‘아/오’를 서로 다른 실제 테이크로 녹음합니다. 같은 녹음의 피치 복제는 가공된 한 실연으로 기록하며 <b class="hl no">여러 명이 불렀다고 쓰지 않습니다.</b> 화음 음을 AI가 새로 정하게 했다면 그 편곡 출처도 남습니다.</p>
+      <p><span class="lead n">실제 바이올린 음색이 꼭 필요한 경우:</span> 본인 또는 연주자가 핵심 한 파트를 녹음하는 방식으로 개선할 수 있습니다. 전문 연주자가 새 음악까지 만드는 경우에는 그 사람의 작곡·편곡 기여를 확인합니다. <b class="hl no">의뢰 비용을 냈다고 모든 저작권이 자동 이전되는 것은 아닙니다.</b></p>
       <p class="note"><span class="lead a">🤖 제가 할 일:</span> 확정된 파트의 가이드, 녹음 시작 신호, 필요한 테이크만 안내하고 컴핑·노이즈 정리·튜닝·배치를 처리합니다. 외부 연주자에게 연락하거나 구매한 상태는 아닙니다.</p>
       <div class="plabel">보낼 프롬프트</div>
       <div class="prompt">
@@ -800,6 +837,7 @@ a.jump:hover{border-bottom-color:var(--accent)}
   </section>
 
   <!-- 12 -->
+  <div class="hr-human" aria-hidden="true" data-noexport>🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨</div>
   <section class="block step" id="s12" data-h="56" data-kind="auto">
     <div class="step-head">
       <div class="bignum">12</div>
@@ -811,7 +849,7 @@ a.jump:hover{border-bottom-color:var(--accent)}
     <div class="body">
       <p><span class="lead a">🤖 제가 할 일:</span> Pedalboard·FFmpeg와 기존 오디오 코드를 이용해 EQ·압축·공간·저역·리미팅을 처리합니다. 프리마스터·무손실 마스터·청취용 파일·스템·측정 보고서를 보관합니다. 실제 사용 경로의 포맷을 확인해 변환합니다. [T2·T4]</p>
       <p><span class="lead n">체크 항목:</span> 박자 그리드·픽업·악기 어택 보정, 전환 클릭, 보컬 재렌더 유지, 구버전 트랙 중복, 클리핑, DC, True Peak, LUFS, 다이내믹, 모노 합산, 앞뒤 여백, 파일 손상. 무조건 그리드에 모든 음을 붙이거나 다이내믹을 평평하게 만들지 않습니다.</p>
-      <p>−14 LUFS와 −1 dBTP는 비교·출력 목표의 한 예입니다. 이를 맞추면 고음질·저작권·유통 승인이라는 뜻은 아닙니다. 측정에서 문제가 없는 경우에도 미세 음질과 음악성은 13단계에서 듣습니다.</p>
+      <p>−14 LUFS와 −1 dBTP는 비교·출력 목표의 한 예입니다. <b class="hl no">이를 맞추면 고음질·저작권·유통 승인이라는 뜻은 아닙니다.</b> 측정에서 문제가 없는 경우에도 미세 음질과 음악성은 13단계에서 듣습니다.</p>
       <p class="note"><span class="lead h">👤 필요한 일:</span> 없음. 제가 사용자의 실제 청취까지 했다고 기록하지 않습니다.</p>
       <div class="plabel">보낼 프롬프트</div>
       <div class="prompt">
@@ -822,6 +860,7 @@ a.jump:hover{border-bottom-color:var(--accent)}
   </section>
 
   <!-- 13 -->
+  <div class="hr-human" aria-hidden="true" data-noexport>🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨</div>
   <section class="block step" id="s13" data-h="48" data-kind="human">
     <div class="step-head">
       <div class="bignum">13</div>
@@ -832,7 +871,7 @@ a.jump:hover{border-bottom-color:var(--accent)}
     </div>
     <div class="body">
       <p><span class="lead h">👤 필수:</span> 전체를 한 번 이상 듣고 원하는 음악인지 확인합니다. 귀에 거슬리는 부분만 초 또는 구간으로 말합니다. 헤드폰과 휴대폰 스피커에서 북·선율·절정이 어떻게 들리는지 비교하면 좋습니다.</p>
-      <p><span class="lead h">👤 이 세션의 실제 참여를 이어가는 방법:</span> ‘새벽의 문은 튀지 않는다’, ‘이 베이스는 빼라’, ‘현악기는 좋다’처럼 구체적으로 평가합니다. 청취 승인은 품질 확인이며, AI가 쓴 기존 음표의 작곡자를 바꾸는 행위는 아닙니다. 직접 만든 새 음·리듬 수정이 있다면 별도로 기록합니다.</p>
+      <p><span class="lead h">👤 이 세션의 실제 참여를 이어가는 방법:</span> ‘새벽의 문은 튀지 않는다’, ‘이 베이스는 빼라’, ‘현악기는 좋다’처럼 구체적으로 평가합니다. 청취 승인은 품질 확인이며, <b class="hl no">AI가 쓴 기존 음표의 작곡자를 바꾸는 행위는 아닙니다.</b> 직접 만든 새 음·리듬 수정이 있다면 별도로 기록합니다.</p>
       <p class="note"><span class="lead a">🤖 제가 할 일:</span> 기술적 문제는 수정하고, 새 음악 표현을 요구하는 수정은 구체적인 입력과 연결합니다. 변화를 적용하면 영향받은 구간을 다시 검사합니다. 새 버전마다 보컬과 확정 선율이 보존되는지 확인합니다.</p>
       <div class="plabel">보낼 프롬프트</div>
       <div class="prompt">
@@ -843,6 +882,7 @@ a.jump:hover{border-bottom-color:var(--accent)}
   </section>
 
   <!-- 14 -->
+  <div class="hr-human" aria-hidden="true" data-noexport>🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨</div>
   <section class="block step" id="s14" data-h="40" data-kind="auto">
     <div class="step-head">
       <div class="bignum">14</div>
@@ -853,8 +893,8 @@ a.jump:hover{border-bottom-color:var(--accent)}
     </div>
     <div class="body">
       <p><span class="lead a">🤖 제가 할 일:</span> 기존 13쪽 서류와 42개 체크 항목에 실제 녹음·반영 구간·음표 수정·도구 버전·소스 목록·해시를 연결합니다. 한국어·영어 제작 설명, 작곡/편곡/실연 구분, 마스터와 샘플 권리, 참고곡 관계, AI 사용 공시를 갱신합니다. 제출할 최종 파일은 하나로 식별합니다.</p>
-      <p>참고곡 두 개와 최종곡의 특징적 선율·리듬·구성을 비교하고 의심 구간을 제시합니다. 자동 유사도나 ‘몇 음 변경’만으로 비침해 판정을 내리지 않습니다. 필요한 원곡 허락과 외부 권리 검토가 미완이면 그렇게 표시합니다.</p>
-      <p class="note"><span class="lead h">👤 필수:</span> 본인 이름·실제 역할·기여 내용·타인 참여·권리 합의의 사실 확인. 날짜·지분·서명을 제가 만들어 넣지 않습니다. 파일 해시는 동일성 확인 값이며 단독으로 저작자나 창작 시점을 인증하지 않습니다.</p>
+      <p>참고곡 두 개와 최종곡의 특징적 선율·리듬·구성을 비교하고 의심 구간을 제시합니다. <b class="hl no">자동 유사도나 ‘몇 음 변경’만으로 비침해 판정을 내리지 않습니다.</b> 필요한 원곡 허락과 외부 권리 검토가 미완이면 그렇게 표시합니다.</p>
+      <p class="note"><span class="lead h">👤 필수:</span> 본인 이름·실제 역할·기여 내용·타인 참여·권리 합의의 사실 확인. 날짜·지분·서명을 제가 만들어 넣지 않습니다. 파일 해시는 동일성 확인 값이며 <b class="hl no">단독으로 저작자나 창작 시점을 인증하지 않습니다.</b></p>
       <div class="plabel">보낼 프롬프트</div>
       <div class="prompt">
         <div class="prompt-bar"><span>복사해서 보내는 프롬프트</span><button class="copy" type="button" data-noexport>복사<span class="ck">✓</span></button></div>
@@ -864,6 +904,7 @@ a.jump:hover{border-bottom-color:var(--accent)}
   </section>
 
   <!-- 15 -->
+  <div class="hr-human" aria-hidden="true" data-noexport>🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨</div>
   <section class="block step" id="s15" data-h="38" data-kind="human">
     <div class="step-head">
       <div class="bignum">15</div>
@@ -875,22 +916,22 @@ a.jump:hover{border-bottom-color:var(--accent)}
     <div class="body" style="max-width:none">
       <p style="max-width:74ch"><span class="lead a">🤖 제가 할 일:</span> 완성된 제출 파일, 표지·크레딧·공시·문서의 누락을 검사하고 플랫폼별 입력 안내를 만듭니다. 결제·제출이 필요할 때는 실제 내용이 준비된 상태에서 진행 범위를 확인합니다. 새 단계에 필요하지 않은 반복 승인은 요구하지 않습니다.</p>
       <p style="max-width:74ch"><span class="lead h">👤 마지막에 필요한 일:</span> 본인 계정 로그인, 인증 코드, 지급·세금 정보, 사실에 맞는 권리 확인과 서명·계약·결제. 이 단계들은 창작 기여와 구분됩니다. 실제 공식 제출은 준비 문서를 확인한 뒤 합니다.</p>
-      <p style="max-width:74ch">저작권 등록·KOMCA·음원 유통·YPP·Content ID의 상태를 각각 기록합니다. 한 곳의 승인이 다른 곳의 승인으로 이어진다고 표시하지 않습니다. 같은 마스터의 Content ID는 관리 경로 하나로 정하고, 자신의 채널 처리 방식도 유통사와 확인합니다. [D2·Y1]</p>
+      <p style="max-width:74ch">저작권 등록·KOMCA·음원 유통·YPP·Content ID의 상태를 각각 기록합니다. <b class="hl no">한 곳의 승인이 다른 곳의 승인으로 이어진다고 표시하지 않습니다.</b> 같은 마스터의 Content ID는 관리 경로 하나로 정하고, 자신의 채널 처리 방식도 유통사와 확인합니다. [D2·Y1]</p>
       <div class="tablewrap">
         <table>
           <thead><tr><th>절차</th><th>예상 기간</th><th>출처·조건</th></tr></thead>
           <tbody>
             <tr><td class="k">한국저작권위원회 등록</td><td class="dur">일반 민원 총 7일</td><td class="src">토요일·공휴일 제외. 보완과 AI 개별 검토는 별도. [K4]</td></tr>
-            <tr><td class="k">KOMCA</td><td class="dur">이 제작 방식에 대한 기간 미확정</td><td class="src">현행 접수 조건부터 확인. [K2·K3]</td></tr>
+            <tr><td class="k">KOMCA</td><td class="dur"><b class="hl chk">이 제작 방식에 대한 기간 미확정</b></td><td class="src">현행 접수 조건부터 확인. [K2·K3]</td></tr>
             <tr><td class="k">DistroKid 자체 검토</td><td class="dur">수일</td><td class="src">업로드 후. 고정 승인 보장 아님. [D3]</td></tr>
             <tr><td class="k">Spotify / Amazon / YouTube Music via DistroKid</td><td class="dur">각각 2~5일 / 1~2일 / 1~3일</td><td class="src">유통사 검토 이후 스토어 단계. 업로드부터의 총기간 아님. [D3]</td></tr>
             <tr><td class="k">RouteNote</td><td class="dur">심사 25~27근무일, 승인일부터 공개 7~14일</td><td class="src">추가 심사·수정 시 지연. AI 전송 제한 별도. [R1·R2]</td></tr>
-            <tr><td class="k">YouTube YPP</td><td class="dur">신청 요건 충족·신청 후 통상 약 1개월</td><td class="src">채널 전체 심사. 음악 한 곡을 만드는 것만으로 자격 충족 아님. [Y2·Y3]</td></tr>
-            <tr><td class="k">YouTube Content ID</td><td class="dur">통일된 공개 승인 기한 확인 못 함</td><td class="src">유통사·권리 검토에 따라 확인. [Y1·D2]</td></tr>
+            <tr><td class="k">YouTube YPP</td><td class="dur">신청 요건 충족·신청 후 통상 약 1개월</td><td class="src">채널 전체 심사. <b class="hl no">음악 한 곡을 만드는 것만으로 자격 충족 아님</b>. [Y2·Y3]</td></tr>
+            <tr><td class="k">YouTube Content ID</td><td class="dur"><b class="hl chk">통일된 공개 승인 기한 확인 못 함</b></td><td class="src">유통사·권리 검토에 따라 확인. [Y1·D2]</td></tr>
           </tbody>
         </table>
       </div>
-      <p class="note" style="max-width:74ch">YouTube의 광고 수익 배분을 위한 일반 YPP 진입 예는 구독자 1,000명과 최근 12개월 유효 공개 시청 4,000시간, 또는 최근 90일 유효 공개 Shorts 조회 1,000만 회입니다. 국가·기능별 조기 자격과 채널 정책은 별도이며 실제 Studio 화면을 확인합니다. 반복·대량 생산 콘텐츠 심사도 있어 음악의 인간 창작 여부만으로 채널 수익화를 확정할 수 없습니다. [Y2·Y3]</p>
+      <p class="note" style="max-width:74ch">YouTube의 광고 수익 배분을 위한 일반 YPP 진입 예는 구독자 1,000명과 최근 12개월 유효 공개 시청 4,000시간, 또는 최근 90일 유효 공개 Shorts 조회 1,000만 회입니다. 국가·기능별 조기 자격과 채널 정책은 별도이며 실제 Studio 화면을 확인합니다. 반복·대량 생산 콘텐츠 심사도 있어 <b class="hl no">음악의 인간 창작 여부만으로 채널 수익화를 확정할 수 없습니다.</b> [Y2·Y3]</p>
       <div class="plabel">보낼 프롬프트</div>
       <div class="prompt" style="max-width:74ch">
         <div class="prompt-bar"><span>복사해서 보내는 프롬프트</span><button class="copy" type="button" data-noexport>복사<span class="ck">✓</span></button></div>
@@ -900,6 +941,7 @@ a.jump:hover{border-bottom-color:var(--accent)}
   </section>
 
   <!-- start prompt -->
+  <div class="hr-human" aria-hidden="true" data-noexport>🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨🟨</div>
   <section class="block" id="start" data-h="44">
     <div class="step-head">
       <div class="bignum">→</div>
@@ -923,7 +965,7 @@ AI가 새 음악을 만들 필요가 생기면 먼저 그 항목을 구분하고
 자동으로 진행할 수 없는 정확한 입력만 알려주고, 실제 완료 파일과 남은 작업을 구분해 줘.
 이전 AI 이력·참고곡 관계를 보존하고 저작권·유통·Content ID·YPP 승인을 서로 구분해 줘.</pre>
       </div>
-      <div class="closing">본인이 반드시 하는 일을 모으면: ① 참고 자료 제공과 새 선율·리듬 만들기 ② 필요한 음악 결정을 듣고 구체적으로 정하기 ③ 완성본 청취와 본인 확인·서명입니다. 11단계 합창·실제 악기 녹음은 선택입니다. 기술 작업 대부분을 자동화할 수 있어도 이 세 가지를 프롬프트 승인만으로 대신 완료했다고 기록할 수는 없습니다.</div>
+      <div class="closing">본인이 반드시 하는 일을 모으면: ① 참고 자료 제공과 새 선율·리듬 만들기 ② 필요한 음악 결정을 듣고 구체적으로 정하기 ③ 완성본 청취와 본인 확인·서명입니다. 11단계 합창·실제 악기 녹음은 선택입니다. 기술 작업 대부분을 자동화할 수 있어도 <b class="hl no">이 세 가지를 프롬프트 승인만으로 대신 완료했다고 기록할 수는 없습니다.</b></div>
     </div>
   </section>
 
@@ -978,7 +1020,7 @@ AI가 새 음악을 만들 필요가 생기면 먼저 그 항목을 구분하고
         <div>기존 사실확인서·체크리스트: 등록 서류 ZIP</div>
         <div>본인 원본 녹음 보관 폴더: <span class="path">D:\_배경음악TTS\MusicAI_CID\01_HUMAN_INPUT</span> — 파일을 대화에 전달하면 보관을 보조할 수 있습니다.</div>
       </div>
-      <div class="ending">이 안내서에는 새 음악 렌더·기관 회신·서명·실제 발매 완료를 주장하는 내용이 없습니다.</div>
+      <div class="ending"><b class="hl no">이 안내서에는 새 음악 렌더·기관 회신·서명·실제 발매 완료를 주장하는 내용이 없습니다.</b></div>
     </div>
   </section>
 
